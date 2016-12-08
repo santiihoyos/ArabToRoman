@@ -1,71 +1,63 @@
-#define PROGRAMA    "ArabToRomano"
+#define PROGRAMA    "ArabToRoman"
 #define DESCRIPCION "Convierte un número Arabe en Romano"
 #define AUTOR   "Santiago Hoyos"
 #define VERSION "v0.1 dic/16 CC-BY-NC-SA"
 #include"c_facil.h"
+#include "string.h"
 
 //declaración de funciones
-NADA construirRomano (NATURAL numero);
+NADA pintarRomano (NATURAL numero);
 NADA descomponerNumero (NATURAL num, NATURAL * unidades, NATURAL * decenas,
 			NATURAL * centenas, NATURAL * unisMil);
-FRASE
-convertir (NATURAL * valorParaConvertir, CARACTER * unos, CARACTER * cincos,
-	   CARACTER * exceso);
+NADA
+convertir (NATURAL * valorParaConvertir, CARACTER unos, CARACTER cincos,
+	   CARACTER exceso);
 
 PRG ()
 {
   NATURAL numero = pideNatural ("Escribe un número[1-3999]: ");
-  if (siMayorValor (numero, 0))
+  if (siMayorValor (numero, 0) && siMenorIgualValor (numero, 3999))
     {
       //escribeFrase ("El número en romano es= " + escribeFrase ("MMMCMXCIX"));
-      construirRomano (numero);
+      pintarRomano (numero);
     }
   else
     {
-      escribeFrase ("¡El número introducido no es válido!");
+      escribeFrase ("\n¡El número introducido no es válido!\n");
     }
 }
 
 NADA
-construirRomano (NATURAL numero)
+pintarRomano (NATURAL numero)
 {
-  FRASE romano = "";
-
   NATURAL unidades = 0;
   NATURAL decenas = 0;
   NATURAL centenas = 0;
   NATURAL unisMil = 0;
-
   descomponerNumero (numero, &unidades, &decenas, &centenas, &unisMil);
 
-  escribeFrase ("\n");
-  escribeFrase ("Unidades= ");
-  escribeNaturalB10 (unidades);
-  escribeFrase ("\n");
-  escribeFrase ("Decenas= ");
-  escribeNaturalB10 (decenas);
-  escribeFrase ("\n");
-  escribeFrase ("Centenas= ");
-  escribeNaturalB10 (centenas);
-  escribeFrase ("\n");
-  escribeFrase ("Unidades de mil= ");
-  escribeNaturalB10 (unisMil);
 
-  escribeFrase ("\n");
-  escribeFrase ("\n");
-  escribeFrase ("\n");
-  escribeFrase ("\n");
+  /*PINTADO DEL RESULTADO: 
+   * me gustaria poder almacenar el romano en una cadena
+   * pero con los tipos de datos definidos en c_facil.h no me resulta fácil.
+   */
+  escribeFrase ("el número ");
+  escribeNatural (numero);
+  escribeFrase (" en romano es el=  ");
 
-  CARACTER uno_unis = 'I';
+  //unidades de mil
+  convertir (&unisMil, 'M', '_', '_');
 
-  escribeFrase ("\nconvirtiendo...\n");
+  //centenas
+  convertir (&centenas, 'C', 'D', 'M');
+
+  //decenas
+  convertir (&decenas, 'X', 'L', 'C');
 
   //unidades a romano
-  CARACTER unos = 'I';
-  CARACTER cincos = 'V';
-  CARACTER exceso = 'X';
-  FRASE unisEnRomano = convertir (&unidades, &unos, &cincos, &exceso);
+  convertir (&unidades, 'I', 'V', 'X');
 
+  escribeFrase ("\n");
 }
 
 /*
@@ -77,48 +69,66 @@ NADA
 descomponerNumero (NATURAL num, NATURAL * unidades, NATURAL * decenas,
 		   NATURAL * centenas, NATURAL * unisMil)
 {
-  *unidades = restoEnteros (num, 10);
-  num = cocienteEnteros ((restaNumeros (num, *unidades)), 10);
-  *decenas = restoEnteros (num, 10);
-  num = cocienteEnteros ((restaNumeros (num, *decenas)), 10);
-  *centenas = restoEnteros (num, 10);
-  num = cocienteEnteros ((restaNumeros (num, *centenas)), 10);
-  *unisMil = restoEnteros (num, 10);
+  asignaValorA (*unidades, restoEnteros (num, 10));
+  asignaValorA (num, cocienteEnteros ((restaNumeros (num, *unidades)), 10));
+  asignaValorA (*decenas, restoEnteros (num, 10));
+  asignaValorA (num, cocienteEnteros ((restaNumeros (num, *decenas)), 10));
+  asignaValorA (*centenas, restoEnteros (num, 10));
+  asignaValorA (num, cocienteEnteros ((restaNumeros (num, *centenas)), 10));
+  asignaValorA (*unisMil, restoEnteros (num, 10));
 }
 
+
 /*
-*
+* Dado un número y unos simbolos convierte a romano.
+* se le ha de pasar la respresentación de la unidad, la representacion de las 5 unidades y
+* la representación de la unidad siguiente.
 */
-FRASE
-convertir (NATURAL * valorParaConvertir, CARACTER * unos, CARACTER * cincos,
-	   CARACTER * exceso)
+NADA
+convertir (NATURAL * valorParaConvertir, CARACTER unos, CARACTER cincos,
+	   CARACTER exceso)
 {
-
-  FRASE respuesta = "";
-
   switch (*valorParaConvertir)
     {
     case 0:
       break;
     case 1:
+      escribeCaracter (unos);
       break;
     case 2:
+      escribeCaracter (unos);
+      escribeCaracter (unos);
       break;
     case 3:
+      escribeCaracter (unos);
+      escribeCaracter (unos);
+      escribeCaracter (unos);
       break;
     case 4:
+      escribeCaracter (unos);
+      escribeCaracter (cincos);
       break;
     case 5:
+      escribeCaracter (cincos);
       break;
     case 6:
+      escribeCaracter (cincos);
+      escribeCaracter (unos);
       break;
     case 7:
+      escribeCaracter (cincos);
+      escribeCaracter (unos);
+      escribeCaracter (unos);
       break;
     case 8:
+      escribeCaracter (cincos);
+      escribeCaracter (unos);
+      escribeCaracter (unos);
+      escribeCaracter (unos);
       break;
     case 9:
+      escribeCaracter (unos);
+      escribeCaracter (exceso);
       break;
     }
-
-  return respuesta;
 }
