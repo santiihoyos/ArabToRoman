@@ -15,8 +15,8 @@ convertir (NATURAL * valorParaConvertir, CARACTER unos, CARACTER cincos,
 PRG ()
 {
   NATURAL numero;
-  asignaValorA (numero, pideNatural ("Escribe un número[1-3999]: "));
-
+  asignaValorA(numero,pideNatural ("Escribe un número[1-3999]: "));
+  
   if (siMayorValor (numero, 0) && siMenorIgualValor (numero, 3999))
     {
       //escribeFrase ("El número en romano es= " + escribeFrase ("MMMCMXCIX"));

@@ -3,6 +3,7 @@
 #define AUTOR   "Santiago Hoyos"
 #define VERSION "v0.1 dic/16 CC-BY-NC-SA"
 #include"c_facil.h"
+#include "string.h"
 
 //declaración de funciones
 NADA pintarRomano (NATURAL numero);
@@ -14,9 +15,7 @@ convertir (NATURAL * valorParaConvertir, CARACTER unos, CARACTER cincos,
 
 PRG ()
 {
-  NATURAL numero;
-  asignaValorA (numero, pideNatural ("Escribe un número[1-3999]: "));
-
+  NATURAL numero = pideNatural ("Escribe un número[1-3999]: ");
   if (siMayorValor (numero, 0) && siMenorIgualValor (numero, 3999))
     {
       //escribeFrase ("El número en romano es= " + escribeFrase ("MMMCMXCIX"));
@@ -31,7 +30,7 @@ PRG ()
 NADA
 pintarRomano (NATURAL numero)
 {
-
+  
   NATURAL unidades;
   NATURAL decenas;
   NATURAL centenas;
