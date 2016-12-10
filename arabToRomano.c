@@ -4,12 +4,17 @@
 #define VERSION "v0.1 dic/16 CC-BY-NC-SA"
 #include"c_facil.h"
 
+/*
+* He querido ser lo mas fidedigno al programa en blocky donde ha usado pasos por refenrencias
+* es lo unico que no he podido hacer sin hacer uso de C base.
+*/
+
 //declaración de funciones
 NADA pintarRomano (NATURAL numero);
 NADA descomponerNumero (NATURAL num, NATURAL * unidades, NATURAL * decenas,
 			NATURAL * centenas, NATURAL * unisMil);
 NADA
-convertir (NATURAL * valorParaConvertir, CARACTER unos, CARACTER cincos,
+convertir (NATURAL valorParaConvertir, CARACTER unos, CARACTER cincos,
 	   CARACTER exceso);
 
 PRG ()
@@ -17,10 +22,13 @@ PRG ()
   NATURAL numero;
   asignaValorA (numero, pideNatural ("Escribe un número[1-3999]: "));
 
-  if (siMayorValor (numero, 0) && siMenorIgualValor (numero, 3999))
+  //se podría desanidar un if usando un &&
+  if (siMayorValor (numero, 0))
     {
-      //escribeFrase ("El número en romano es= " + escribeFrase ("MMMCMXCIX"));
-      pintarRomano (numero);
+      if (siMenorIgualValor (numero, 3999))
+	{
+	  pintarRomano (numero);
+	}
     }
   else
     {
@@ -28,36 +36,37 @@ PRG ()
     }
 }
 
+
+/*
+* Función que llama a las funciones pertinenter para pintar el romano en la salida estandar
+*/
 NADA
 pintarRomano (NATURAL numero)
 {
 
-  NATURAL unidades;
-  NATURAL decenas;
-  NATURAL centenas;
-  NATURAL unisMil;
+  NATURAL unidades, decenas, centenas, unisMil;
+
+  //llamada a descomposición del numéro haciendo paso por referencia como en el blocky
   descomponerNumero (numero, &unidades, &decenas, &centenas, &unisMil);
 
-
   /*PINTADO DEL RESULTADO: 
-   * me gustaria poder almacenar el romano en una cadena
-   * pero con los tipos de datos definidos en c_facil.h no me resulta fácil.
+   * me gustaria poder almacenar el romano en una cadena y concatenar el resultado.
    */
   escribeFrase ("el número ");
   escribeNatural (numero);
   escribeFrase (" en romano es el=  ");
 
   //unidades de mil
-  convertir (&unisMil, 'M', '_', '_');
+  convertir (unisMil, 'M', '_', '_');
 
   //centenas
-  convertir (&centenas, 'C', 'D', 'M');
+  convertir (centenas, 'C', 'D', 'M');
 
   //decenas
-  convertir (&decenas, 'X', 'L', 'C');
+  convertir (decenas, 'X', 'L', 'C');
 
   //unidades a romano
-  convertir (&unidades, 'I', 'V', 'X');
+  convertir (unidades, 'I', 'V', 'X');
 
   escribeFrase ("\n");
 }
@@ -87,50 +96,58 @@ descomponerNumero (NATURAL num, NATURAL * unidades, NATURAL * decenas,
 * la representación de la unidad siguiente.
 */
 NADA
-convertir (NATURAL * valorParaConvertir, CARACTER unos, CARACTER cincos,
+convertir (NATURAL valorParaConvertir, CARACTER unos, CARACTER cincos,
 	   CARACTER exceso)
 {
-  switch (*valorParaConvertir)
+  //he usado un else if para no usar switch y mantenernos en la linea de clase
+  if (siMayorValor (valorParaConvertir, 0))
     {
-    case 0:
-      break;
-    case 1:
-      escribeCaracter (unos);
-      break;
-    case 2:
-      escribeCaracter (unos);
-      escribeCaracter (unos);
-      break;
-    case 3:
-      escribeCaracter (unos);
-      escribeCaracter (unos);
-      escribeCaracter (unos);
-      break;
-    case 4:
-      escribeCaracter (unos);
-      escribeCaracter (cincos);
-      break;
-    case 5:
-      escribeCaracter (cincos);
-      break;
-    case 6:
-      escribeCaracter (cincos);
-      escribeCaracter (unos);
-      break;
-    case 7:
-      escribeCaracter (cincos);
-      escribeCaracter (unos);
-      escribeCaracter (unos);
-      break;
-    case 8:
-      escribeCaracter (cincos);
-      escribeCaracter (unos);
-      escribeCaracter (unos);
-      escribeCaracter (unos);
-      break;
-    case 9:
-      escribeCaracter (unos);
-      escribeCaracter (exceso);
-      break;
+      if (siIgualValor (valorParaConvertir, 1))
+	{
+	  escribeCaracter (unos);
+	}
+      else if (siIgualValor (valorParaConvertir, 2))
+	{
+	  escribeCaracter (unos);
+	  escribeCaracter (unos);
+	}
+      else if (siIgualValor (valorParaConvertir, 3))
+	{
+	  escribeCaracter (unos);
+	  escribeCaracter (unos);
+	  escribeCaracter (unos);
+	}
+      else if (siIgualValor (valorParaConvertir, 4))
+	{
+	  escribeCaracter (unos);
+	  escribeCaracter (cincos);
+	}
+      else if (siIgualValor (valorParaConvertir, 5))
+	{
+	  escribeCaracter (cincos);
+	}
+      else if (siIgualValor (valorParaConvertir, 6))
+	{
+	  escribeCaracter (cincos);
+	  escribeCaracter (unos);
+	}
+      else if (siIgualValor (valorParaConvertir, 7))
+	{
+	  escribeCaracter (cincos);
+	  escribeCaracter (unos);
+	  escribeCaracter (unos);
+	}
+      else if (siIgualValor (valorParaConvertir, 8))
+	{
+	  escribeCaracter (cincos);
+	  escribeCaracter (unos);
+	  escribeCaracter (unos);
+	  escribeCaracter (unos);
+	}
+      else if (siIgualValor (valorParaConvertir, 9))
+	{
+	  escribeCaracter (unos);
+	  escribeCaracter (exceso);
+	}
     }
 }
