@@ -1,8 +1,8 @@
-#define PROGRAMA    "ArabToRoman"
+#define PROGRAMA "ArabToRoman"
 #define DESCRIPCION "Convierte un número Arabe en Romano"
-#define AUTOR   "Santiago Hoyos"
+#define AUTOR "Santiago Hoyos"
 #define VERSION "v0.1 dic/16 CC-BY-NC-SA"
-#include"c_facil.h"
+#include "c_facil.h"
 
 /*
 * He querido ser lo mas fidedigno al programa en blocky donde ha usado pasos por refenrencias
@@ -13,12 +13,13 @@
 NADA pintarRomano (NATURAL numero);
 NADA descomponerNumero (NATURAL num, NATURAL * unidades, NATURAL * decenas,
 			NATURAL * centenas, NATURAL * unisMil);
-NADA
-convertir (NATURAL valorParaConvertir, CARACTER unos, CARACTER cincos,
-	   CARACTER exceso);
+NADA convertir (NATURAL valorParaConvertir, CARACTER unos, CARACTER cincos,
+		CARACTER exceso);
 
+//función principal
 PRG ()
 {
+
   NATURAL numero;
   asignaValorA (numero, pideNatural ("Escribe un número[1-3999]: "));
 
@@ -35,7 +36,6 @@ PRG ()
       escribeFrase ("\n¡El número introducido no es válido!\n");
     }
 }
-
 
 /*
 * Función que llama a las funciones pertinenter para pintar el romano en la salida estandar
@@ -88,7 +88,6 @@ descomponerNumero (NATURAL num, NATURAL * unidades, NATURAL * decenas,
   asignaValorA (num, cocienteEnteros ((restaNumeros (num, *centenas)), 10));
   asignaValorA (*unisMil, restoEnteros (num, 10));
 }
-
 
 /*
 * Dado un número y unos simbolos convierte a romano.
